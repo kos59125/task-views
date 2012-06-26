@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CRANTaskView>
+  <name>MyView</name>
+  <topic>My Favorite Packages.</topic>
+  <maintainer email="mail@example.com">kos59125</maintainer>
+  <version>2012-06-15</version>
+  <info>Just listed a couple of random pakcages.</info>
+  <packagelist>
+    <pkg priority="core">rbenchmark</pkg>
+    <pkg>RUnit</pkg>
+  </packagelist>
+  <links>
+    <a href="http://cran.r-project.org/web/packages/ctv/vignettes/ctv-howto.pdf">Writing CRAN Task Views</a>
+    <a href="http://cran.r-project.org/web/views/">CRAN Task Views</a>
+  </links>
+</CRANTaskView>

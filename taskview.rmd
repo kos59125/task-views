@@ -1,0 +1,82 @@
+Introduction to Task Views for Private Use
+========================================================
+
+CRAN Task Views let you handle CRAN packages into a unit of task view. A task view has one or more packages. `ctv` package enables you to install or update packages listed in the view.
+
+```{r}
+library(ctv)
+```
+
+Functions in `ctv` are similar to the functions for packages.
+
+Action | Packages | Views
+------ | -------- | -----
+Search | `available.packages` | `available.views` 
+Installation | `install.packages` | `install.views`
+Removal | `remove.packages` | *NA*
+Update | `update.packages` | `update.views`
+Download | `download.packages` | `download.views`
+Listing installed | `installed.packages` | *NA*
+
+```{r}
+available.views()
+```
+
+**Notice**: Each official view contains so many packages. Do not try to install or download view unless you really want to install it.
+
+Creating Your View
+--------------------------------------------------
+
+You can define your favorite packages into a view in an XML format. Here's an example.
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<CRANTaskView>
+  <name>MyView</name>
+  <topic>My Favorite Packages.</topic>
+  <maintainer email="mail@example.com">kos59125</maintainer>
+  <version>2012-06-15</version>
+  <info>Just listed a couple of random pakcages.</info>
+  <packagelist>
+    <pkg priority="core">rbenchmark</pkg>
+    <pkg>RUnit</pkg>
+  </packagelist>
+  <links>
+    <a href="http://cran.r-project.org/web/packages/ctv/vignettes/ctv-howto.pdf">Writing CRAN Task Views</a>
+    <a href="http://cran.r-project.org/web/views/">CRAN Task Views</a>
+  </links>
+</CRANTaskView>
+```
+
+See vignettes of `ctv` package to get details.
+
+The file is able to be read using `read.ctv` function.
+
+```{r}
+myview <- read.ctv("myview.ctv")
+myview
+```
+
+Use Your View
+--------------------------------------------------
+
+You cannot describe your favorite CRAN server in ctv files. Because `repos` argument in `install.views` function, unfortunately, does not work fine, you'll get an error.
+
+```{r}
+install.views(myview, repos="http://cran.r-project.org/")
+```
+
+To solve the problem, you can enforce the view object to have `repository` attribute.
+
+```{r}
+myview$repository <- "http://cran.r-project.org"
+print(myview)
+```
+
+OK, the repository is surely set in the view. Try to install again.
+
+```{r message=FALSE}
+install.views(myview)
+```
+
+Congraturations! You no longer get annoyed with troublesome setup of packages.
